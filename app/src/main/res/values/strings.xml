@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="today_title">Today</string>
+    <string name="forecast_title">Forecast</string>
 </resources>
