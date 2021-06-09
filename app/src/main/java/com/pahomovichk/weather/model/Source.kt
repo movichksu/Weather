@@ -34,8 +34,10 @@ class Source {
             .map { response ->
                 CurrentWeather(
                     response.name.orEmpty(),
+                    response.sys?.country.orEmpty(),
                     response.weather?.get(0)?.main.orEmpty(),
                     response.main?.temp?.minus(273) ?: 0.0,
+                    response.clouds?.all?: 0,
                     response.main?.pressure ?: 0,
                     response.wind?.speed ?: 0.0,
                     response.wind?.deg ?: 0

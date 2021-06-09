@@ -5,19 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.pahomovichk.weather.Constants
 import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.presenter.TodayPresenter
-import org.w3c.dom.Text
 
 class TodayFragment : Fragment(),WeatherView {
 
     private lateinit var parsenter: TodayPresenter
-    private lateinit var weather: CurrentWeather
-    private lateinit var text: TextView
+
+    private lateinit var currentLocation: TextView
+    private lateinit var currentTemp: TextView
+    private lateinit var pop: TextView
+    private lateinit var windSpeed: TextView
+    private lateinit var windDeg: TextView
+    private lateinit var popVolume: TextView
+    private lateinit var pressure: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,14 +42,23 @@ class TodayFragment : Fragment(),WeatherView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text = view.findViewById<TextView>(R.id.today_text)
+        currentLocation = view.findViewById(R.id.current_weather_location)
+        currentTemp = view.findViewById(R.id.current_weather_temp)
+        pop = view.findViewById(R.id.pop_txt)
+        windSpeed = view.findViewById(R.id.wind_speed_txt)
+        windDeg = view.findViewById(R.id.wind_deg_txt)
+        popVolume = view.findViewById(R.id.precipitation_volume_txt)
+        pressure = view.findViewById(R.id.pressure_txt)
     }
 
     override fun setWeather(weather: CurrentWeather) {
-        Toast
-            .makeText(this.context, "${weather.name}, ${weather.temp}", Toast.LENGTH_SHORT)
-            .show()
-        text.setText("${weather.name}, ${weather.temp}")
+        currentLocation.setText("${weather.name}, ${weather.country}")
+        currentTemp.setText("${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS} | ${weather.main}")
+        pop.setText("${weather.pop}%")
+        windSpeed.setText("${weather.speed} km/h")
+        windDeg.setText("${weather.deg} deg")
+        popVolume.setText("${weather.speed} mm")
+        pressure.setText("${weather.pressure} hPa")
     }
 
 }

@@ -7,17 +7,188 @@
     android:layout_height="match_parent"
     tools:context=".view.TodayFragment">
 
-    <TextView
-        android:id="@+id/today_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/current_weather_ic"
+        android:layout_width="@dimen/big_img_size"
+        android:layout_height="@dimen/big_img_size"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_sun"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/current_weather_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_weather_ic"
+
+        tools:text="Minsk, BY"
+        />
+
+    <TextView
+        android:id="@+id/current_weather_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_weather_location"
+
+        tools:text="20°C | Sunny"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="120dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/current_weather_temp" />
+
+
+    <LinearLayout
+        android:id="@+id/pop_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/wind_speed_info">
+        <ImageView
+            android:id="@+id/pop_img"
+            android:layout_width="@dimen/small_img_size"
+            android:layout_height="@dimen/small_img_size"
+            android:src="@drawable/ic_sun"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/pop_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="35%"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wind_speed_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toEndOf="@id/pop_info"
+        app:layout_constraintEnd_toStartOf="@id/wind_deg_info">
+        <ImageView
+            android:id="@+id/wind_speed_img"
+            android:layout_width="@dimen/small_img_size"
+            android:layout_height="@dimen/small_img_size"
+            android:src="@drawable/ic_sun"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/wind_speed_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="20km/h"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/wind_deg_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toEndOf="@id/wind_speed_info"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/wind_deg_img"
+            android:layout_width="@dimen/small_img_size"
+            android:layout_height="@dimen/small_img_size"
+            android:src="@drawable/ic_sun"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/wind_deg_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="315 deg"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/precipitation_volume_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/wind_speed_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pressure_info">
+        <ImageView
+            android:id="@+id/precipitation_volume_img"
+            android:layout_width="@dimen/small_img_size"
+            android:layout_height="@dimen/small_img_size"
+            android:src="@drawable/ic_sun"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/precipitation_volume_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="0.1 mm"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/pressure_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/big_margin"
+        app:layout_constraintTop_toBottomOf="@id/wind_speed_info"
+        app:layout_constraintStart_toEndOf="@id/precipitation_volume_info"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            android:id="@+id/pressure_img"
+            android:layout_width="@dimen/small_img_size"
+            android:layout_height="@dimen/small_img_size"
+            android:src="@drawable/ic_sun"
+            android:layout_gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/pressure_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="1019 hPa"
+            />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
