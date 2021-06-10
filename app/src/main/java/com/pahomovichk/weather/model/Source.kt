@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.pahomovichk.weather.BuildConfig
 import com.pahomovichk.weather.Constants
 import com.pahomovichk.weather.model.data.CurrentWeather
+import com.pahomovichk.weather.model.data.Forecast
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,6 +43,19 @@ class Source {
                     response.wind?.speed ?: 0.0,
                     response.wind?.deg ?: 0
                 )
+            }
+    }
+
+    fun getForecast(lat: Float, lon: Float, appId: String, units: String): Observable<List<Forecast>> {
+        return apiService
+            .getForecast(lat,lon,appId,units)
+            .map { response ->
+                response.list?.map {
+                    Forecast(
+                        it?.dtTxt.orEmpty(),
+                        it?.weather?.get(0)?.main.orEmpty(),
+                        it?.main?.temp?.minus(273) ?: 0.0)
+                }
             }
     }
 }

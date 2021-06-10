@@ -12,7 +12,7 @@ import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.presenter.TodayPresenter
 
-class TodayFragment : Fragment(),WeatherView {
+class TodayFragment : Fragment(),CurrentWeatherView {
 
     private lateinit var parsenter: TodayPresenter
 
