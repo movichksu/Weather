@@ -12,9 +12,9 @@ import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.presenter.TodayPresenter
 
-class TodayFragment : Fragment(),WeatherView {
+class TodayFragment : Fragment(),CurrentWeatherView {
 
-    private lateinit var parsenter: TodayPresenter
+    private lateinit var presenter: TodayPresenter
 
     private lateinit var currentLocation: TextView
     private lateinit var currentTemp: TextView
@@ -29,8 +29,8 @@ class TodayFragment : Fragment(),WeatherView {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        parsenter = TodayPresenter(Source(),this)
-        parsenter.getWeather()
+        presenter = TodayPresenter(Source(),this)
+        presenter.getWeather()
 
         val root = inflater.inflate(R.layout.today_fragment, container, false)
         return root
