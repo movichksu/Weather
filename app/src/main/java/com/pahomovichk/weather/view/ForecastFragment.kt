@@ -1,5 +1,6 @@
 package com.pahomovichk.weather.view
 
+import ForecastAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.Forecast
 import com.pahomovichk.weather.presenter.ForecastPresenter
-import com.pahomovichk.weather.view.adapter.ForecastAdapter
 
 class ForecastFragment() : Fragment(), ForecastView {
 
