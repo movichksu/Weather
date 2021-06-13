@@ -52,9 +52,9 @@ class Source {
             .map { response ->
                 response.list?.map {
                     Forecast(
-                        it?.dtTxt.orEmpty(),
-                        it?.weather?.get(0)?.main.orEmpty(),
-                        it?.main?.temp?.minus(273) ?: 0.0)
+                        it.dtTxt?.substring(11,16).orEmpty(),
+                        it.weather?.get(0)?.main.orEmpty(),
+                        it.main?.temp?.minus(273) ?: 0.0)
                 }
             }
     }

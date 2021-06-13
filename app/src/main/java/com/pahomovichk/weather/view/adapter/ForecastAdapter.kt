@@ -37,7 +37,7 @@ class ForecastAdapter internal constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (forecast[position].time.contains("00:00:00")) {
+        if (forecast[position].time.contains("00:00")) {
             return HAT_TYPE
         } else {
             return WEATHER_TYPE
