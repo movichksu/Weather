@@ -10,6 +10,7 @@ import com.pahomovichk.weather.Constants
 import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
+import com.pahomovichk.weather.presenter.CurrentLocation
 import com.pahomovichk.weather.presenter.TodayPresenter
 
 class TodayFragment : Fragment(),CurrentWeatherView {
@@ -24,6 +25,8 @@ class TodayFragment : Fragment(),CurrentWeatherView {
     private lateinit var popVolume: TextView
     private lateinit var pressure: TextView
 
+    private val location = CurrentLocation()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,8 +35,14 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         presenter = TodayPresenter(Source(),this)
         presenter.getWeather()
 
+       location.setLocationManager()
         val root = inflater.inflate(R.layout.today_fragment, container, false)
         return root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        location.fetchCurrentLocation()
     }
 
     override fun onDestroyView() {
