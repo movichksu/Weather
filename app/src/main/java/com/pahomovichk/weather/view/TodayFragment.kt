@@ -1,5 +1,6 @@
 package com.pahomovichk.weather.view
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,18 +36,24 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         presenter = TodayPresenter(Source(),this)
         presenter.getWeather()
 
-       location.setLocationManager()
+        location.setLocationClient(requireActivity())
         val root = inflater.inflate(R.layout.today_fragment, container, false)
         return root
     }
 
     override fun onStart() {
         super.onStart()
-        location.fetchCurrentLocation()
+        location.getLastLocation(requireActivity())
+        //location.checkSettingsAndStartUpdates(requireActivity())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        location.stopLocationUpdates()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,6 +75,18 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDeg.setText("${weather.deg} deg")
         popVolume.setText("${weather.speed} mm")
         pressure.setText("${weather.pressure} hPa")
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == Constants.LOCATION_PERMISSION_RQ) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                location.getLastLocation(requireActivity())
+            }
+        }
     }
 
 }
