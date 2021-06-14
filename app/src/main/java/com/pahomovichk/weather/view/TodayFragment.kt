@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.pahomovichk.weather.Constants
@@ -13,6 +14,7 @@ import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.presenter.CurrentLocation
 import com.pahomovichk.weather.presenter.TodayPresenter
+import com.pahomovichk.weather.view.adapter.WeatherIcon
 
 class TodayFragment : Fragment(),CurrentWeatherView {
 
@@ -25,6 +27,13 @@ class TodayFragment : Fragment(),CurrentWeatherView {
     private lateinit var windDeg: TextView
     private lateinit var popVolume: TextView
     private lateinit var pressure: TextView
+
+    private lateinit var weatherIcon: ImageView
+    private lateinit var popIcon: ImageView
+    private lateinit var windSpeedIcon: ImageView
+    private lateinit var windDegIcon: ImageView
+    private lateinit var volumeIcon: ImageView
+    private lateinit var pressureIcon: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +63,13 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDeg = view.findViewById(R.id.wind_deg_txt)
         popVolume = view.findViewById(R.id.precipitation_volume_txt)
         pressure = view.findViewById(R.id.pressure_txt)
+
+        weatherIcon = view.findViewById(R.id.current_weather_ic)
+        popIcon = view.findViewById(R.id.pop_img)
+        windSpeedIcon = view.findViewById(R.id.wind_speed_img)
+        windDegIcon = view.findViewById(R.id.wind_deg_img)
+        volumeIcon = view.findViewById(R.id.precipitation_volume_img)
+        pressureIcon = view.findViewById(R.id.pressure_img)
     }
 
     override fun setView(weather: CurrentWeather) {
@@ -64,6 +80,13 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDeg.setText("${weather.deg} deg")
         popVolume.setText("${weather.speed} mm")
         pressure.setText("${weather.pressure} hPa")
+
+        weatherIcon.setImageResource(WeatherIcon.defineIcon(weather.ico).icon)
+        popIcon.setImageResource(R.drawable.ic_shower_rain)
+        windSpeedIcon.setImageResource(R.drawable.ic_windy)
+        windDegIcon.setImageResource(R.drawable.ic_compass)
+        volumeIcon.setImageResource(R.drawable.ic_drop)
+        pressureIcon.setImageResource(R.drawable.ic_drop)
     }
 
     override fun getRequireActivity(): Activity {
