@@ -36,6 +36,7 @@ class Source {
             .getCurrentWeather(lat,lon,appId,units)
             .map { response ->
                 CurrentWeather(
+                    response.weather?.get(0)?.icon.orEmpty(),
                     response.name.orEmpty(),
                     response.sys?.country.orEmpty(),
                     response.weather?.get(0)?.main.orEmpty(),
@@ -54,6 +55,7 @@ class Source {
             .map { response ->
                 response.list?.map {
                     Forecast(
+                        it.weather?.get(0)?.icon.orEmpty(),
                         it.dtTxt?.substring(11,16).orEmpty(),
                         it.weather?.get(0)?.main.orEmpty(),
                         it.main?.temp?.minus(273) ?: 0.0)
