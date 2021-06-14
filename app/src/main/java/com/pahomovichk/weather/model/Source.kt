@@ -1,10 +1,12 @@
 package com.pahomovichk.weather.model
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.pahomovichk.weather.BuildConfig
 import com.pahomovichk.weather.Constants
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.model.data.Forecast
+import com.pahomovichk.weather.presenter.CurrentLocation
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +31,7 @@ class Source {
         .build()
     val apiService: APIService = retrofit.create(APIService::class.java)
 
-    fun getCurrentWeather(lat: Float, lon: Float, appId: String, units: String): Observable<CurrentWeather> {
+    fun getCurrentWeather(lat: Double, lon: Double, appId: String, units: String): Observable<CurrentWeather> {
         return apiService
             .getCurrentWeather(lat,lon,appId,units)
             .map { response ->
@@ -46,7 +48,7 @@ class Source {
             }
     }
 
-    fun getForecast(lat: Float, lon: Float, appId: String, units: String): Observable<List<Forecast>> {
+    fun getForecast(lat: Double, lon: Double, appId: String, units: String): Observable<List<Forecast>> {
         return apiService
             .getForecast(lat,lon,appId,units)
             .map { response ->

@@ -23,8 +23,8 @@ data class CurrentWeatherResponse(
     )
 
     data class Coord(
-        var lat: Int? = null,
-        var lon: Int? = null
+        var lat: Double? = null,
+        var lon: Double? = null
     )
 
     data class Main(

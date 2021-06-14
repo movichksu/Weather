@@ -23,101 +23,16 @@ class CurrentLocation {
     }
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
-    private val locationRequest = LocationRequest.create()?.apply {
-        interval = 10000
-        fastestInterval = 5000
-        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-    }
-    private var lat: Double = 0.0
-    private var lon: Double = 0.0
-
-    val locationCallback = object: LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult?) {
-            locationResult ?: return
-            for (location in locationResult.locations) {
-                Log.d(TAG, "${location.latitude} , ${location.longitude}")
-                lat = location.latitude
-                lon = location.longitude
-            }
-        }
-    }
-
-    fun getLatitude(): Double{
-        return lat
-    }
-
-    fun getLongitude(): Double{
-        return lon
-    }
 
     fun setLocationClient(activity : Activity){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
     }
 
-    fun getLastLocation(activity : Activity) {
-        if (checkPermission()) {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location ->
-                    if (location != null) {
-                        lat = location.latitude
-                        lon = location.longitude
-                    }
-                    else{
-                        checkSettingsAndStartUpdates(activity)
-                    }
-                }
-        }
-        else{
+    fun getLocation(activity : Activity): Task<Location> {
+        if (!checkPermission()) {
             askPermission(activity)
         }
-    }
-
-    fun checkSettingsAndStartUpdates(activity : Activity){
-        val request = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        val client: SettingsClient = LocationServices.getSettingsClient(activity)
-        val task: Task<LocationSettingsResponse> = client.checkLocationSettings(request.build())
-        task.addOnSuccessListener { location ->
-            Toast
-                .makeText(
-                    App.instance,
-                    "${location.locationSettingsStates}",
-                    Toast.LENGTH_LONG
-                )
-                .show()
-            startLocationUpdates()
-        }
-        task.addOnFailureListener { exception ->
-            if (exception is ResolvableApiException) {
-                // Location settings are not satisfied, but this can be fixed
-                // by showing the user a dialog.
-                try {
-                    // Show the dialog by calling startResolutionForResult(),
-                    // and check the result in onActivityResult().
-                    exception.startResolutionForResult(
-                        activity,
-                        Constants.CHECK_SETTINGS_RQ
-                    )
-                } catch (sendEx: IntentSender.SendIntentException) {
-                    // Ignore the error.
-                }
-            }
-        }
-    }
-
-    private fun startLocationUpdates() {
-        if (checkPermission()) {
-            fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
-        }
-        else{
-            return
-        }
-    }
-
-    fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        return fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null)
     }
 
     // permissions:

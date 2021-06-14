@@ -1,6 +1,7 @@
 package com.pahomovichk.weather.view
 
 import ForecastAdapter
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,6 @@ class ForecastFragment() : Fragment(), ForecastView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         forecastView = view.findViewById(R.id.forecast_list)
-
         forecastView.layoutManager = LinearLayoutManager(requireContext())
         forecastView.adapter = forecastAdapter
     }
@@ -43,7 +43,11 @@ class ForecastFragment() : Fragment(), ForecastView {
         super.onDestroyView()
     }
 
-    override fun setForecast(weather: List<Forecast>) {
+    override fun setView(weather: List<Forecast>) {
         forecastAdapter.setData(weather)
+    }
+
+    override fun getRequireActivity(): Activity {
+        return requireActivity()
     }
 }

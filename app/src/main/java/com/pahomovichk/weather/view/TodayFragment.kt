@@ -1,6 +1,6 @@
 package com.pahomovichk.weather.view
 
-import android.content.pm.PackageManager
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,34 +26,23 @@ class TodayFragment : Fragment(),CurrentWeatherView {
     private lateinit var popVolume: TextView
     private lateinit var pressure: TextView
 
-    private val location = CurrentLocation()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         presenter = TodayPresenter(Source(),this)
-        presenter.getWeather()
-
-        location.setLocationClient(requireActivity())
         val root = inflater.inflate(R.layout.today_fragment, container, false)
         return root
     }
 
     override fun onStart() {
         super.onStart()
-        location.getLastLocation(requireActivity())
-        //location.checkSettingsAndStartUpdates(requireActivity())
+        presenter.getCurrentWeather()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        location.stopLocationUpdates()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +56,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         pressure = view.findViewById(R.id.pressure_txt)
     }
 
-    override fun setWeather(weather: CurrentWeather) {
+    override fun setView(weather: CurrentWeather) {
         currentLocation.setText("${weather.name}, ${weather.country}")
         currentTemp.setText("${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS} | ${weather.main}")
         pop.setText("${weather.pop}%")
@@ -77,16 +66,8 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         pressure.setText("${weather.pressure} hPa")
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == Constants.LOCATION_PERMISSION_RQ) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                location.getLastLocation(requireActivity())
-            }
-        }
+    override fun getRequireActivity(): Activity {
+        return requireActivity()
     }
 
 }

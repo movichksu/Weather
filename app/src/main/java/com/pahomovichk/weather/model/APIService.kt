@@ -13,16 +13,16 @@ interface APIService {
 
     @GET("data/2.5/weather")
     fun getCurrentWeather(
-        @Query("lat") lat: Float,
-        @Query("lon") lon: Float,
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
         @Query("appid") appId: String,
         @Query("units") units: String
     ): Observable<CurrentWeatherResponse>
 
     @GET("data/2.5/forecast")
     fun getForecast(
-        @Query("lat") lat: Float,
-        @Query("lon") lon: Float,
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
         @Query("appid") appId: String,
         @Query("units") units: String
     ): Observable<ForecastResponse>

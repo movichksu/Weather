@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/forecast_navigation"
-        android:icon="@drawable/ic_cloud"
+        android:icon="@drawable/ic_cloudy"
         android:title="@string/forecast_title" />
 
 </menu>
