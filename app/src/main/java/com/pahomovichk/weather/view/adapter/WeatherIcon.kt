@@ -10,10 +10,11 @@ sealed class WeatherIcon(
     object ClearN: WeatherIcon(R.drawable.ic_night)
     object CloudyS: WeatherIcon(R.drawable.ic_cloudy_d)
     object CloudyN: WeatherIcon(R.drawable.ic_cloudy_n)
-    object ScatteredClouds: WeatherIcon(R.drawable.ic_weather_cloudy)
-    object ShowerRain: WeatherIcon(R.drawable.ic_shower_rain)
-    object RainS: WeatherIcon(R.drawable.ic_rainy_d)
-    object RainN: WeatherIcon(R.drawable.ic_rainy)
+    object ScatteredClouds: WeatherIcon(R.drawable.ic_cloudy)
+    object ShowerRainS: WeatherIcon(R.drawable.ic_shower_rain_d)
+    object ShowerRainN: WeatherIcon(R.drawable.ic_shower_rain_n)
+    object RainS: WeatherIcon(R.drawable.ic_rain_d)
+    object RainN: WeatherIcon(R.drawable.ic_rain_n)
     object ThunderStorm: WeatherIcon(R.drawable.ic_thunderstorm)
     object Snow: WeatherIcon(R.drawable.ic_snowy)
     object Fog: WeatherIcon(R.drawable.ic_fog)
@@ -24,10 +25,11 @@ sealed class WeatherIcon(
             when(str){
                 "01d" -> ClearS
                 "01n" -> ClearN
-                "02d" -> CloudyS
-                "02n" -> CloudyN
-                "03d", "03n", "04d", "04n" -> ScatteredClouds
-                "09d", "09n" -> ShowerRain
+                "02d", "03d" -> CloudyS
+                "02n", "03n" -> CloudyN
+                "04d", "04n" -> ScatteredClouds
+                "09d" -> ShowerRainS
+                "09n" -> ShowerRainN
                 "10d" -> RainS
                 "10n" -> RainN
                 "11d", "11n" -> ThunderStorm
