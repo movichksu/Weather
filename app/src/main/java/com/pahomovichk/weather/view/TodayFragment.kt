@@ -77,7 +77,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         currentTemp.setText("${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS} | ${weather.main}")
         pop.setText("${weather.pop}%")
         windSpeed.setText("${weather.speed} km/h")
-        windDeg.setText("${weather.deg} deg")
+        windDeg.setText("${Compass.defineSide(weather.deg).side}")
         popVolume.setText("${weather.speed} mm")
         pressure.setText("${weather.pressure} hPa")
 

@@ -22,18 +22,18 @@ sealed class WeatherIcon(
     companion object{
         fun defineIcon(str: String): WeatherIcon =
             when(str){
-                "01d" -> WeatherIcon.ClearS
-                "01n" -> WeatherIcon.ClearN
-                "02d" -> WeatherIcon.CloudyS
-                "02n" -> WeatherIcon.CloudyN
-                "03d", "03n", "04d", "04n" -> WeatherIcon.ScatteredClouds
-                "09d", "09n" -> WeatherIcon.ShowerRain
-                "10d" -> WeatherIcon.RainS
-                "10n" -> WeatherIcon.RainN
-                "11d", "11n" -> WeatherIcon.ThunderStorm
-                "13d", "13n" -> WeatherIcon.Snow
-                "50d", "50n" -> WeatherIcon.Fog
-                else -> WeatherIcon.Default
+                "01d" -> ClearS
+                "01n" -> ClearN
+                "02d" -> CloudyS
+                "02n" -> CloudyN
+                "03d", "03n", "04d", "04n" -> ScatteredClouds
+                "09d", "09n" -> ShowerRain
+                "10d" -> RainS
+                "10n" -> RainN
+                "11d", "11n" -> ThunderStorm
+                "13d", "13n" -> Snow
+                "50d", "50n" -> Fog
+                else -> Default
             }
     }
 }

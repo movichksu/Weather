@@ -73,6 +73,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/pop_txt"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -99,6 +100,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/wind_speed_txt"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -125,10 +127,11 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/wind_deg_txt"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            tools:text="315 deg"
+            tools:text="SE"
             />
     </LinearLayout>
 
@@ -151,6 +154,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/precipitation_volume_txt"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -177,6 +181,7 @@
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:id="@+id/pressure_txt"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
