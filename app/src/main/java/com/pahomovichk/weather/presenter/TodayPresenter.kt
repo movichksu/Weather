@@ -16,15 +16,21 @@ class TodayPresenter(
         val TAG = "TODAY_PRESENTER"
     }
 
+    private lateinit var location: CurrentLocation
+
     @SuppressLint("CheckResult")
-    fun getWeather(){
-        source.getCurrentWeather(53f,27f,Constants.APP_ID_KEY,"metrics")
-            .doOnError { error -> Log.d(TAG, "getWeather() ERROR!")}
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Log.d(TAG, "Weather was got successfully!")
-                view.setWeather(it)
-            }
+    fun getCurrentWeather(){
+        location = CurrentLocation()
+        location.setLocationClient(view.getRequireActivity())
+        location.getLocation(view.getRequireActivity()).addOnSuccessListener { location ->
+            source.getCurrentWeather(location.latitude,location.longitude,Constants.APP_ID_KEY,"metrics")
+                .doOnError { error -> Log.d(TAG, "getWeather() ERROR!")}
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    Log.d(TAG, "Weather was got successfully!")
+                    view.setView(it)
+                }
+        }
     }
 }
