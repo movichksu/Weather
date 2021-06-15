@@ -35,6 +35,15 @@ class Source {
         return apiService
             .getCurrentWeather(lat,lon,appId,units)
             .map { response ->
+                val volume : Double? =
+                    if (response.rain?.h != null) {
+                        response.rain?.h
+                    } else if (response.snow?.h != null) {
+                        response.snow?.h
+                    } else {
+                        null
+                    }
+
                 CurrentWeather(
                     response.weather?.get(0)?.icon.orEmpty(),
                     response.name.orEmpty(),
@@ -42,6 +51,7 @@ class Source {
                     response.weather?.get(0)?.main.orEmpty(),
                     response.main?.temp?.minus(273) ?: 0.0,
                     response.clouds?.all?: 0,
+                    volume?: 0.0,
                     response.main?.pressure ?: 0,
                     response.wind?.speed ?: 0.0,
                     response.wind?.deg ?: 0

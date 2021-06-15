@@ -7,6 +7,7 @@ data class CurrentWeather(
     val main: String,
     val temp: Double,
     val pop: Int,
+    val volume: Double,
     val pressure: Int,
     val speed: Double,
     val deg: Int

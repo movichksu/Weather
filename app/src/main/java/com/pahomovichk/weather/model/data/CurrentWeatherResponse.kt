@@ -11,6 +11,8 @@ data class CurrentWeatherResponse(
     var dt: Int? = null,
     var id: Int? = null,
     var main: Main? = null,
+    var rain: Rain? = null,
+    var snow: Snow? = null,
     var name: String? = null,
     var sys: Sys? = null,
     var timezone: Int? = null,
@@ -20,6 +22,16 @@ data class CurrentWeatherResponse(
 ) {
     data class Clouds(
         var all: Int? = null
+    )
+
+    data class Rain(
+        @SerializedName("1h")
+        var h: Double? = null
+    )
+
+    data class Snow(
+        @SerializedName("1h")
+        var h: Double? = null
     )
 
     data class Coord(

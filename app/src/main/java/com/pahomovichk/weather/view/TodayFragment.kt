@@ -78,7 +78,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         pop.setText("${weather.pop}%")
         windSpeed.setText("${weather.speed} km/h")
         windDeg.setText("${Compass.defineSide(weather.deg).side}")
-        popVolume.setText("${weather.speed} mm")
+        popVolume.setText("${weather.volume} mm")
         pressure.setText("${weather.pressure} hPa")
 
         weatherIcon.setImageResource(WeatherIcon.defineIcon(weather.ico).icon)
@@ -86,7 +86,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windSpeedIcon.setImageResource(R.drawable.ic_windy)
         windDegIcon.setImageResource(R.drawable.ic_compass)
         volumeIcon.setImageResource(R.drawable.ic_drop)
-        pressureIcon.setImageResource(R.drawable.ic_drop)
+        pressureIcon.setImageResource(R.drawable.ic_thermometer)
     }
 
     override fun getRequireActivity(): Activity {
