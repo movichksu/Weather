@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,7 @@ class ForecastFragment() : Fragment(), ForecastView {
     private lateinit var presenter: ForecastPresenter
     private lateinit var forecastView: RecyclerView
     private var forecastAdapter = ForecastAdapter(listOf())
+    private lateinit var failure: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +28,6 @@ class ForecastFragment() : Fragment(), ForecastView {
         savedInstanceState: Bundle?
     ): View? {
         presenter = ForecastPresenter(Source(),this)
-        presenter.getForecast()
-
         val root = inflater.inflate(R.layout.forecast_fragment, container, false)
         return root
     }
@@ -37,8 +37,13 @@ class ForecastFragment() : Fragment(), ForecastView {
         forecastView = view.findViewById(R.id.forecast_list)
         forecastView.layoutManager = LinearLayoutManager(requireContext())
         forecastView.adapter = forecastAdapter
+        failure = view.findViewById(R.id.forecast_failure_txt)
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.getForecast()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
     }
@@ -49,5 +54,9 @@ class ForecastFragment() : Fragment(), ForecastView {
 
     override fun getRequireActivity(): Activity {
         return requireActivity()
+    }
+
+    override fun setFailureLocationView(text: String) {
+        failure.setText(text)
     }
 }

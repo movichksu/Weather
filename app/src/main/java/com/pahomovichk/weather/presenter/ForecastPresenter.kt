@@ -22,15 +22,31 @@ class ForecastPresenter(
     fun getForecast(){
         location = CurrentLocation()
         location.setLocationClient(view.getRequireActivity())
-        location.getLocation(view.getRequireActivity()).addOnSuccessListener{ location ->
-            source.getForecast(location.latitude,location.longitude, Constants.APP_ID_KEY,"metrics")
-                .doOnError { error -> Log.d(TAG, "getWeather() ERROR!")}
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    Log.d(TAG, "Forecast was got successfully!")
-                    view.setView(it)
+        val rezult = location.getLocation(view.getRequireActivity())
+        when(rezult){
+            is Result.Success -> {
+                rezult.task.addOnSuccessListener { location ->
+                    source.getForecast(location.latitude, location.longitude, Constants.APP_ID_KEY, "metrics")
+                        .doOnError { error ->
+                            Log.d("NETWORK", "failure")
+                            view.setFailureLocationView("Oops! Something went wrong.")
+                        }
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { weather ->
+                            Log.d(TAG, "Weather was got successfully!")
+                            view.setView(weather)
+                        }
                 }
+                    .addOnFailureListener {
+                        Log.d("NETWORK", "failure")
+                        view.setFailureLocationView("Oops! Something went wrong.")
+                    }
+            }
+            is Result.Error -> {
+                Log.d("NETWORK", "${rezult.exception.message}")
+                view.setFailureLocationView("${rezult.exception.message}")
+            }
         }
 
     }

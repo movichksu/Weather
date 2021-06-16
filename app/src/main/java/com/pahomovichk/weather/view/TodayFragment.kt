@@ -12,7 +12,6 @@ import com.pahomovichk.weather.Constants
 import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
-import com.pahomovichk.weather.presenter.CurrentLocation
 import com.pahomovichk.weather.presenter.TodayPresenter
 import com.pahomovichk.weather.view.adapter.WeatherIcon
 
@@ -27,6 +26,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
     private lateinit var windDeg: TextView
     private lateinit var popVolume: TextView
     private lateinit var pressure: TextView
+    private lateinit var failure: TextView
 
     private lateinit var weatherIcon: ImageView
     private lateinit var popIcon: ImageView
@@ -63,6 +63,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDeg = view.findViewById(R.id.wind_deg_txt)
         popVolume = view.findViewById(R.id.precipitation_volume_txt)
         pressure = view.findViewById(R.id.pressure_txt)
+        failure = view.findViewById(R.id.today_failure_txt)
 
         weatherIcon = view.findViewById(R.id.current_weather_ic)
         popIcon = view.findViewById(R.id.pop_img)
@@ -72,7 +73,7 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         pressureIcon = view.findViewById(R.id.pressure_img)
     }
 
-    override fun setView(weather: CurrentWeather) {
+    override fun setWeatherView(weather: CurrentWeather) {
         currentLocation.setText("${weather.name}, ${weather.country}")
         currentTemp.setText("${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS} | ${weather.main}")
         pop.setText("${weather.pop}%")
@@ -91,6 +92,10 @@ class TodayFragment : Fragment(),CurrentWeatherView {
 
     override fun getRequireActivity(): Activity {
         return requireActivity()
+    }
+
+    override fun setFailureLocationView(text: String) {
+        failure.setText(text)
     }
 
 }

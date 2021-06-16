@@ -7,4 +7,5 @@ import com.pahomovichk.weather.model.data.Forecast
 interface ForecastView {
     fun setView(weather: List<Forecast>)
     fun getRequireActivity(): Activity
+    fun setFailureLocationView(text: String)
 }

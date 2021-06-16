@@ -1,26 +1,23 @@
 package com.pahomovichk.weather.presenter
 
-import android.Manifest
 import android.app.Activity
-import android.content.IntentSender
+import android.content.Context.CONNECTIVITY_SERVICE
+import android.content.Context.LOCATION_SERVICE
 import android.content.pm.PackageManager
-import android.location.Location
-import android.os.Looper
+import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.Task
 import com.pahomovichk.weather.App
 import com.pahomovichk.weather.Constants
+import java.lang.Exception
 
 
 class CurrentLocation {
-
-    companion object{
-        val TAG = "LOCATION_"
-    }
 
     private lateinit var fusedLocationClient : FusedLocationProviderClient
 
@@ -28,15 +25,25 @@ class CurrentLocation {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
     }
 
-    fun getLocation(activity : Activity): Task<Location> {
-        if (!checkPermission()) {
+    fun getLocation(activity : Activity): Result {
+        if (!checkLocationPermission()) {
             askPermission(activity)
+            return Result.Error(Exception("The location permission was not received."))
         }
-        return fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null)
+        if (!checkInternetConnection()){
+            Log.d("NETWORK", "failure")
+            return Result.Error(Exception("The internet is not connected. Please, turn on the internet and restart app."))
+        }
+            val lm = App.instance.getSystemService(LOCATION_SERVICE) as LocationManager
+            val gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            if (!gps_enabled){
+                Log.d("LOCATION", "failure")
+                return Result.Error(Exception("Location is not connected. Please, turn on location and restart app."))
+            }
+        return Result.Success(fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null))
     }
 
     // permissions:
-
     private fun askPermission(activity: Activity){
         if (ActivityCompat.checkSelfPermission(App.instance, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED)
@@ -59,13 +66,43 @@ class CurrentLocation {
         }
     }
 
-    private fun checkPermission(): Boolean{
+    private fun checkLocationPermission(): Boolean{
         if (ActivityCompat.checkSelfPermission(App.instance, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED
         ) {
             return false
         }
         return true
+    }
+
+    private fun checkInternetConnection(): Boolean{
+        val connectivityManager = App.instance.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+        var capabilities : NetworkCapabilities? = null
+        if (connectivityManager != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                } else {
+                    val networks: Array<Network> = connectivityManager.getAllNetworks()
+                        var i = 0
+                        while (i < networks.size && capabilities == null) {
+                            capabilities = connectivityManager.getNetworkCapabilities(networks.get(i))
+                            i++
+                        }
+                }
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("INTERNET", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("INTERNET", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("INTERNET", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 
 
