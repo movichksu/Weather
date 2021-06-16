@@ -1,10 +1,12 @@
 package com.pahomovichk.weather.view
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -33,6 +35,8 @@ class TodayFragment : Fragment(),CurrentWeatherView {
     private lateinit var windDegIcon: ImageView
     private lateinit var volumeIcon: ImageView
     private lateinit var pressureIcon: ImageView
+
+    private lateinit var shareBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,16 +74,19 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDegIcon = view.findViewById(R.id.wind_deg_img)
         volumeIcon = view.findViewById(R.id.precipitation_volume_img)
         pressureIcon = view.findViewById(R.id.pressure_img)
+
+        shareBtn = view.findViewById(R.id.share_btn)
     }
 
     override fun setWeatherView(weather: CurrentWeather) {
         currentLocation.setText("${weather.name}, ${weather.country}")
         currentTemp.setText("${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS} | ${weather.main}")
         pop.setText("${weather.pop}%")
-        windSpeed.setText("${weather.speed} km/h")
+        windSpeed.setText("${weather.speed} m/s")
         windDeg.setText("${Compass.defineSide(weather.deg).side}")
         popVolume.setText("${weather.volume} mm")
         pressure.setText("${weather.pressure} hPa")
+        failure.setText("")
 
         weatherIcon.setImageResource(WeatherIcon.defineIcon(weather.ico).icon)
         popIcon.setImageResource(R.drawable.ic_shower_rain)
@@ -87,6 +94,21 @@ class TodayFragment : Fragment(),CurrentWeatherView {
         windDegIcon.setImageResource(R.drawable.ic_compass)
         volumeIcon.setImageResource(R.drawable.ic_drop)
         pressureIcon.setImageResource(R.drawable.ic_thermometer)
+
+        shareBtn.visibility = View.VISIBLE
+        shareBtn.setOnClickListener {
+            val shareString = "The weather forecast in ${weather.name} for today:\n" +
+                    "The temperature is ${Math.round(weather.temp * 10) / 10}°C, ${weather.main}." +
+                    "Probability of precipitation — ${weather.pop}%. " +
+                    "Wind direction is ${Compass.defineSide(weather.deg).side}, speed is ${weather.speed}m/s. " +
+                    "Pressure is ${weather.pressure}hPa. "
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareString)
+                type = "text/plain"
+            }
+            startActivity(shareIntent)
+        }
     }
 
     override fun getRequireActivity(): Activity {

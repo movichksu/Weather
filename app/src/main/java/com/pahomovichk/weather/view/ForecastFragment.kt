@@ -49,6 +49,7 @@ class ForecastFragment() : Fragment(), ForecastView {
     }
 
     override fun setView(weather: List<Forecast>) {
+        failure.setText("")
         forecastAdapter.setData(weather)
     }
 
