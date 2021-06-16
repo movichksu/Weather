@@ -6,4 +6,5 @@
     <string name="exception_loc_permission">The location permission was not received. Restart the app, please.</string>
     <string name="exception_internet_connection">The internet is not connected. Please, turn on the internet and restart app.</string>
     <string name="exception_loc_connection">Location is not connected. Please, turn on location and restart app.</string>
+    <string name="hat_today">TODAY</string>
 </resources>

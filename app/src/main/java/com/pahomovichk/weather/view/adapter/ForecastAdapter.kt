@@ -1,14 +1,17 @@
-import android.util.Log
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.pahomovichk.weather.App
 import com.pahomovichk.weather.Constants
+import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.data.Forecast
 import com.pahomovichk.weather.view.WeatherIcon
-import java.lang.Exception
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 
 class ForecastAdapter internal constructor(
@@ -40,7 +43,7 @@ class ForecastAdapter internal constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (forecast[position].time.contains("00:00")) {
+        if (forecast[position].time.contains("00:00") || position == 0) {
             return HAT_TYPE
         } else {
             return WEATHER_TYPE
@@ -75,12 +78,23 @@ class ForecastAdapter internal constructor(
         val weather = forecast[position]
         when(holder){
             is HatViewHolder -> {
-                holder.hat.text = "WEAK DAY"
+                if (position == 0) {
+                    holder.hat.text = App.instance.getString(R.string.hat_today)
+                }
+                else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val date: LocalDate = LocalDate.parse(weather.date)
+                        val day: DayOfWeek = date.getDayOfWeek()
+                        holder.hat.text = day.toString()
+                    } else {
+                        holder.hat.text = weather.date
+                    }
+                }
                 holder.ico.setImageResource(WeatherIcon.defineIcon(weather.ico).icon)
                 holder.description.text = weather.main
                 holder.time.text = weather.time
                 holder.temperature.text = "${Math.round(weather.temp * 10) / 10}${Constants.CELSIUS}"
-                Log.d("ICON", "${weather.ico}")
+
             }
             is WeatherViewHolder -> {
                 holder.ico.setImageResource(WeatherIcon.defineIcon(weather.ico).icon)
@@ -90,5 +104,6 @@ class ForecastAdapter internal constructor(
             }
         }
     }
+
 
 }

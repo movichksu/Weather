@@ -67,7 +67,8 @@ class Source {
                     Forecast(
                         it.weather?.get(0)?.icon.orEmpty(),
                         it.dtTxt?.substring(11,16).orEmpty(),
-                        it.weather?.get(0)?.main.orEmpty(),
+                        it.dtTxt?.substring(0,10).orEmpty(),
+                        it.weather?.get(0)?.description.orEmpty(),
                         it.main?.temp?.minus(273) ?: 0.0)
                 }
             }
