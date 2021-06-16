@@ -2,7 +2,9 @@ package com.pahomovichk.weather.presenter
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.pahomovichk.weather.App
 import com.pahomovichk.weather.Constants
+import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.view.CurrentWeatherView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +32,7 @@ class TodayPresenter(
                     source.getCurrentWeather(location.latitude, location.longitude, Constants.APP_ID_KEY, "metrics")
                         .doOnError { error ->
                             Log.d("NETWORK", "failure")
-                            view.setFailureLocationView("Oops! Something went wrong.")
+                            view.setFailureLocationView(App.instance.getString(R.string.exception_unknown))
                         }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -40,7 +42,7 @@ class TodayPresenter(
                 }
                     .addOnFailureListener { error ->
                         Log.d("NETWORK", "failure")
-                        view.setFailureLocationView("Oops! Something went wrong.")
+                        view.setFailureLocationView(App.instance.getString(R.string.exception_unknown))
                     }
             }
             is Result.Error -> {

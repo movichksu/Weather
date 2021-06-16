@@ -1,4 +1,4 @@
-package com.pahomovichk.weather.view.adapter
+package com.pahomovichk.weather.view
 
 import androidx.annotation.DrawableRes
 import com.pahomovichk.weather.R

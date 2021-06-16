@@ -6,9 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pahomovichk.weather.Constants
-import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.data.Forecast
-import com.pahomovichk.weather.view.adapter.WeatherIcon
+import com.pahomovichk.weather.view.WeatherIcon
 import java.lang.Exception
 
 

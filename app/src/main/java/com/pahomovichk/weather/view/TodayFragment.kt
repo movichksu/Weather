@@ -13,7 +13,6 @@ import com.pahomovichk.weather.R
 import com.pahomovichk.weather.model.Source
 import com.pahomovichk.weather.model.data.CurrentWeather
 import com.pahomovichk.weather.presenter.TodayPresenter
-import com.pahomovichk.weather.view.adapter.WeatherIcon
 
 class TodayFragment : Fragment(),CurrentWeatherView {
 

@@ -1,7 +1,5 @@
 package com.pahomovichk.weather.view
 
-import com.pahomovichk.weather.view.adapter.WeatherIcon
-
 sealed class Compass(var side: String) {
     object N : Compass("N")
     object W : Compass("W")

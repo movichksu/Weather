@@ -14,8 +14,8 @@ import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import com.pahomovichk.weather.App
 import com.pahomovichk.weather.Constants
+import com.pahomovichk.weather.R
 import java.lang.Exception
-
 
 class CurrentLocation {
 
@@ -28,17 +28,17 @@ class CurrentLocation {
     fun getLocation(activity : Activity): Result {
         if (!checkLocationPermission()) {
             askPermission(activity)
-            return Result.Error(Exception("The location permission was not received."))
+            return Result.Error(Exception(App.instance.getString(R.string.exception_loc_permission)))
         }
         if (!checkInternetConnection()){
             Log.d("NETWORK", "failure")
-            return Result.Error(Exception("The internet is not connected. Please, turn on the internet and restart app."))
+            return Result.Error(Exception(App.instance.getString(R.string.exception_internet_connection)))
         }
             val lm = App.instance.getSystemService(LOCATION_SERVICE) as LocationManager
             val gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
             if (!gps_enabled){
                 Log.d("LOCATION", "failure")
-                return Result.Error(Exception("Location is not connected. Please, turn on location and restart app."))
+                return Result.Error(Exception(App.instance.getString(R.string.exception_loc_connection)))
             }
         return Result.Success(fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, null))
     }
