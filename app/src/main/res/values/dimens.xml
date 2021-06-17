@@ -13,4 +13,6 @@
     <dimen name="small_margin">10dp</dimen>
     <dimen name="big_text_size">26sp</dimen>
     <dimen name="middle_margin">20dp</dimen>
+    <dimen name="horizontal_layout_margin">10dp</dimen>
+    <dimen name="small_text_size">14dp</dimen>
 </resources>
