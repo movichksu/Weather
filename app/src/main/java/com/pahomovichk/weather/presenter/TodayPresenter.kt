@@ -29,16 +29,21 @@ class TodayPresenter(
         when(rezult){
             is Result.Success -> {
                 rezult.task.addOnSuccessListener { location ->
-                    source.getCurrentWeather(location.latitude, location.longitude, Constants.APP_ID_KEY, "metrics")
-                        .doOnError { error ->
-                            Log.d("NETWORK", "failure")
-                            view.setFailureLocationView(App.instance.getString(R.string.exception_unknown))
-                        }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe { weather ->
-                            view.setWeatherView(weather)
-                        }
+                    if (location != null){
+                        source.getCurrentWeather(location.latitude, location.longitude, Constants.APP_ID_KEY, "metrics")
+                            .doOnError { error ->
+                                Log.d("NETWORK", "failure")
+                                view.setFailureLocationView(App.instance.getString(R.string.exception_unknown))
+                            }
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe { weather ->
+                                view.setWeatherView(weather)
+                            }
+                    }
+                    else{
+                        view.setFailureLocationView(App.instance.getString(R.string.exception_unknown))
+                    }
                 }
                     .addOnFailureListener { error ->
                         Log.d("NETWORK", "failure")

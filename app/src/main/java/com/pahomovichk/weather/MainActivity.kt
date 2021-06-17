@@ -1,5 +1,6 @@
 package com.pahomovichk.weather
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
